@@ -81,7 +81,8 @@ void drawpyramid()
     for (GLint i = 0; i <4; i++)
     {
         //glColor3f(colors[i][0],colors[i][1],colors[i][2]);
-        getNormal3p(v_pyramid[p_Indices[i][0]][0], v_pyramid[p_Indices[i][0]][1], v_pyramid[p_Indices[i][0]][2],
+
+        (v_pyramid[p_Indices[i][0]][0], v_pyramid[p_Indices[i][0]][1], v_pyramid[p_Indices[i][0]][2],
                     v_pyramid[p_Indices[i][1]][0], v_pyramid[p_Indices[i][1]][1], v_pyramid[p_Indices[i][1]][2],
                     v_pyramid[p_Indices[i][2]][0], v_pyramid[p_Indices[i][2]][1], v_pyramid[p_Indices[i][2]][2]);
 
@@ -162,9 +163,9 @@ void drawpyramid3()
 {
     GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
     GLfloat mat_ambient[] = { 0.5, 0.5, 0.5, 1.0 };
-    GLfloat mat_diffuse[] = { 0.0, 0.3, 0.8, 1.0 };
-    GLfloat mat_specular[] = { 0.0, 0.3, 0.8, 1.0 };
-    GLfloat mat_shininess[] = {60};
+    GLfloat mat_diffuse[] = { 0.3, 0.0, 0.0, 1.0 };
+    GLfloat mat_specular[] = { 0.3, 0.0, 0.0, 1.0 };
+    GLfloat mat_shininess[] = {80};
 
     glMaterialfv( GL_FRONT, GL_AMBIENT, mat_ambient);
     glMaterialfv( GL_FRONT, GL_DIFFUSE, mat_diffuse);
