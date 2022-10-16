@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1665931977 source:f:\captures\4-2\zlabs\graphics\git\computer-graphics\lab3\projectprogress\main.cpp
+1665955019 source:f:\captures\4-2\zlabs\graphics\git\computer-graphics\lab3\projectprogress\main.cpp
 	<GL/gl.h>
 	<GL/glu.h>
 	<GL/glut.h>
@@ -904,4 +904,9 @@
 
 1665790974 f:\captures\4-2\zlabs\graphics\git\computer-graphics\lab3\projectprogress\bmploader.h
 	<windows.h>
+
+1665790970 source:f:\captures\4-2\zlabs\graphics\git\computer-graphics\lab3\projectprogress\bmploader.cpp
+	"BmpLoader.h"
+	<stdio.h>
+	<iostream>
 

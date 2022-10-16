@@ -25,13 +25,13 @@ int l1=1, l2=1,aa=1,ad=1,as=1,ba=1,bd=1,bs=1;
 
 GLuint startList;
 
-GLfloat eyeX = 2;
-GLfloat eyeY = 3;
-GLfloat eyeZ = 10;
+GLfloat eyeX = 2-15-15;
+GLfloat eyeY = 3+15;
+GLfloat eyeZ = 10+30+2+6;
 
-GLfloat lookX = 2;
-GLfloat lookY = 0;
-GLfloat lookZ = 0;
+GLfloat lookX = 2-15-15;
+GLfloat lookY = 0+15;
+GLfloat lookZ = 0+30+2+6;
 
 GLfloat upX = 0;
 GLfloat upY = 1;
@@ -108,20 +108,6 @@ static void getNormal3p
 
 void light1()
 {
-//    GLfloat no_light[] = { 0.0, 0.0, 0.0, 1.0 };
-//    GLfloat light_ambient[]  = {1, 1, 1, 1.0};
-//    GLfloat light_diffuse[]  = { 1.0, 1.0, 1.0, 1.0 };
-//    GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-//    GLfloat light_position[] = { 0.0, 50.0, 20.0, 1.0 };
-//    GLfloat light_position2[] = { 0.0, 50.0, 0.0, 1.0 };
-//
-//    glEnable( GL_LIGHT0);
-//    glLightfv( GL_LIGHT0, GL_AMBIENT, light_ambient);
-//    glLightfv( GL_LIGHT0, GL_DIFFUSE, light_diffuse);
-//    glLightfv( GL_LIGHT0, GL_SPECULAR, light_specular);
-//    glLightfv( GL_LIGHT0, GL_POSITION, light_position);
-
-///////////////////////////////////////////////////////////////
 
 GLfloat no_light[] = { 0.0, 0.0, 0.0, 1.0 };
 
@@ -156,42 +142,6 @@ GLfloat light_ambient[]  = {1.0, 1.0, 1.0, 1.0};
 
 
 }
-
-void drawcylinder(GLfloat amb_x, GLfloat amb_y, GLfloat amb_z, GLfloat dif_x, GLfloat dif_y, GLfloat dif_z, GLfloat spec_x, GLfloat spec_y, GLfloat spec_z, GLfloat shine)
-{
-
-//    printf("Cylinder");
-//    GLUquadricObj *qobj;
-//    GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
-//    GLfloat mat_ambient[] = { amb_x, amb_y, amb_z, 1.0 };
-//    GLfloat mat_diffuse[] = { dif_z, dif_y, dif_z, 1.0 };
-//    GLfloat mat_specular[] = { spec_x, spec_y, spec_z, 1.0 };
-//    GLfloat mat_shininess[] = {shine};
-//
-//    glMaterialfv( GL_FRONT, GL_AMBIENT, mat_ambient);
-//    glMaterialfv( GL_FRONT, GL_DIFFUSE, mat_diffuse);
-//    glMaterialfv( GL_FRONT, GL_SPECULAR, mat_specular);
-//    glMaterialfv( GL_FRONT, GL_SHININESS, mat_shininess);
-
-//    startList = glGenLists(1);
-//    qobj = gluNewQuadric();
-////    gluQuadricCallback(qobj,GLU_ERROR, errorCallback);
-//
-//    gluQuadricDrawStyle(qobj, GLU_FILL);
-//    gluQuadricNormals(qobj,GLU_SMOOTH);
-//    glNewList(startList,GL_COMPILE);
-//    gluCylinder(qobj,0.5,0.3,1.0,15,5);
-//    glEndList();
-    glColor3f(1,0,0);
-    GLUquadricObj *quadratic;
-  quadratic = gluNewQuadric();
-//  glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
-  gluDisk(quadratic,0,3,1,2);
-
-
-
-}
-
 
 void drawcube(GLfloat amb_x, GLfloat amb_y, GLfloat amb_z)
 {
@@ -256,164 +206,19 @@ void LoadTexture1(const char*filename)
     gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, bl.iWidth, bl.iHeight, GL_RGB, GL_UNSIGNED_BYTE, bl.textureData );
 }
 
-void drawbed()
+
+void draw_chair()
 {
-    //legs
-    glEnable(GL_TEXTURE_2D);
-    glPushMatrix();
-    glScalef(0.5,2,0.5);
-    glTranslatef(-12,-5,0);
-//    drawcube(0.54,0.05,0.0);
-    //F:\captures\4-2\zlabs\Graphics\git\Computer-Graphics\Lab3\TextureHw\RoomWithTexture\wood.bmp
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
-    drawcube(1,1,1);
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-
-    glEnable(GL_TEXTURE_2D);
-    glPushMatrix();
-    glScalef(0.5,2,0.5);
-    glTranslatef(12,-5,0);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
-    drawcube(1,1,1);
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-
-    glEnable(GL_TEXTURE_2D);
-    glPushMatrix();
-    glScalef(0.5,2,0.5);
-    glTranslatef(-12,-5,-7);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
-    drawcube(1,1,1);
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-
-
-    glEnable(GL_TEXTURE_2D);
-    glPushMatrix();
-    glScalef(0.5,2,0.5);
-    glTranslatef(12,-5,-7);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
-    drawcube(1,1,1);
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-//    //legs
-//
-    //base
-    glEnable(GL_TEXTURE_2D);
-    glPushMatrix();
-    glScalef(6,1,1.5);
-    glTranslatef(-1,-9,-.5);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
-    drawcube(1,1,1);
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-
-    //base
-//
-    //mattress
-    glEnable(GL_TEXTURE_2D);
-    glPushMatrix();
-    glScalef(6,.3,1.5);
-    glTranslatef(-1,-24,-.5);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\matress.bmp");
-    drawcube(1,1,1);
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-    //mattress
-//
-    //pillow
-    glEnable(GL_TEXTURE_2D);
-    glPushMatrix();
-    glScalef(1,.3,1.5);
-    glTranslatef(-5,-22,-.5);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\pillow.bmp");
-    drawcube(1,1,1);
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-    //pillow
-//
-//    //upper part
-//
-    glEnable(GL_TEXTURE_2D);
-    glPushMatrix();
-    glScalef(0.5,1,2.2);
-    glTranslatef(-12,-7,0);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
-    drawcube(1,1,1);
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-
-    //leg1
-    glEnable(GL_TEXTURE_2D);
-    glPushMatrix();
-    glScalef(0.5,.5,0.5);
-    glTranslatef(-12,-10,0);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
-    drawcube(1,1,1);
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-
-    glEnable(GL_TEXTURE_2D);
-
-    glPushMatrix();
-    glScalef(0.5,.5,0.5);
-    glTranslatef(-12,-10,-7);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
-    drawcube(1,1,1);
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-
-    glEnable(GL_TEXTURE_2D);
-
-    glPushMatrix();
-    glScalef(0.5,.5,0.5);
-    glTranslatef(12,-13,0);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
-    drawcube(1,1,1);
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-
-    glEnable(GL_TEXTURE_2D);
-
-    glPushMatrix();
-    glScalef(0.5,.5,0.5);
-    glTranslatef(12,-13,-7);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
-    drawcube(1,1,1);
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-
-    //leg1
-
-    //blanket
-
-    glEnable(GL_TEXTURE_2D);
-
-    glPushMatrix();
-    glScalef(2.7,.3,1.5);
-    glTranslatef(0.3,-22,-.5);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\blanket.bmp");
-    drawcube(1,1,1);
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-
-    //blanket
-
-    //upper part
-}
-
-void draw_chair_table()
-{
-//
-//    //chair legs
+    //    //chair legs
 //
     glEnable(GL_TEXTURE_2D);
     glPushMatrix();
     glScalef(0.5,4,0.5);
     glTranslatef(8,-2.5,0);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
-    drawcube(1,1,1);
+
+//    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
+//    drawcube(1,1,1);
+    drawcube(.54,.05,0);
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 //
@@ -421,8 +226,9 @@ glEnable(GL_TEXTURE_2D);
     glPushMatrix();
     glScalef(0.5,4,0.5);
     glTranslatef(8,-2.5,-4);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
-    drawcube(1,1,1);
+
+//    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
+    drawcube(.54,.05,0);
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 
@@ -430,8 +236,9 @@ glEnable(GL_TEXTURE_2D);
     glPushMatrix();
     glScalef(0.5,2,0.5);
     glTranslatef(12,-5,0);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
-    drawcube(1,1,1);
+
+//    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
+   drawcube(.54,.05,0);
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 
@@ -439,8 +246,9 @@ glEnable(GL_TEXTURE_2D);
     glPushMatrix();
     glScalef(0.5,2,0.5);
     glTranslatef(12,-5,-4);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
-    drawcube(1,1,1);
+
+//    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
+    drawcube(.54,.05,0);
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 
@@ -454,7 +262,8 @@ glEnable(GL_TEXTURE_2D);
     glTranslatef(2.5,-12,0);
 //    drawcube(1,1,1);
 
-LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
+//LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
+//glRotatef(90,0,1,0);
     drawcube(1,1,1);
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
@@ -467,30 +276,57 @@ LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\T
     glPushMatrix();
     glScalef(0.5,1,1.5);
     glTranslatef(8,-3,0);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
-    drawcube(1,1,1);
+//    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
+//    glRotatef(90,0,1,0);
+    drawcube(.54,.05,0);
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 
     //support
 
+
+}
+
+
+void draw_table()
+{
+
+//
+    glPushMatrix();
+    glTranslatef(-3.5,0,1.5);
+    draw_chair();
+    glPopMatrix();
     //table legs
+
+    glPushMatrix();
+    glRotatef(-90,0,1,0);
+    glTranslatef(-9.5,0,-6.5);
+    draw_chair();
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(90,0,1,0);
+    glTranslatef(-9.5,0,9.5);
+    draw_chair();
+    glPopMatrix();
 
     glEnable(GL_TEXTURE_2D);
     glPushMatrix();
     glScalef(0.5,4,0.5);
-    glTranslatef(16,-2.5,6);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
-    drawcube(1,1,1);
+    glTranslatef(8,-2.5,6);
+//    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
+//    glRotatef(90,0,1,0);
+    drawcube(.54,.05,0);
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 
     glEnable(GL_TEXTURE_2D);
     glPushMatrix();
     glScalef(0.5,4,0.5);
-    glTranslatef(16,-2.5,-6);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
-    drawcube(1,1,1);
+    glTranslatef(8,-2.5,1);
+
+//    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
+    drawcube(.54,.05,0);
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 
@@ -498,17 +334,17 @@ LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\T
     glPushMatrix();
     glScalef(0.5,4,0.5);
     glTranslatef(24,-2.5,6);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
-    drawcube(1,1,1);
+//    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
+    drawcube(.54,.05,0);
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 
     glEnable(GL_TEXTURE_2D);
     glPushMatrix();
     glScalef(0.5,4,0.5);
-    glTranslatef(24,-2.5,-6);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
-    drawcube(1,1,1);
+    glTranslatef(24,-2.5,1);
+//    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
+    drawcube(.54,.05,0);
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 
@@ -517,9 +353,10 @@ LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\T
     //table base
     glEnable(GL_TEXTURE_2D);
     glPushMatrix();
-    glScalef(5,.5,5);
-    glTranslatef(1.1,-4.5,1);
+    glScalef(6,.5,3);
+    glTranslatef(0.5,-4.5,1);
 //    drawcube(1,1,1);F:\captures\4-2\zlabs\Graphics
+
     LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wood.bmp");
     drawcube(1,1,1);
     glPopMatrix();
@@ -527,112 +364,49 @@ LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\T
 
     //table base
 //
-    //laptop
 
-    glEnable(GL_TEXTURE_2D);
-    glPushMatrix();
-    glScalef(1,.1,1);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\lap.bmp");
-    glTranslatef(9,-11,0);
-    drawcube(1,1,1);
-//    drawcube(0,0,0);
-
-//    drawcube(0.24,0.031,0.016);
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-
-
-    glEnable(GL_TEXTURE_2D);
-    glPushMatrix();
-    glTranslatef(11,-1,0);
-    glScalef(.1,1,1);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\lap2.bmp");
-    drawcube(1,1,1);
-
-//    drawcube(0.24,0.031,0.016);
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-
-
-    glEnable(GL_TEXTURE_2D);
-    glPushMatrix();
-    glTranslatef(10.99,-1,0);
-    glScalef(.001,1,1);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\lap3.bmp");
-    drawcube(1,1,1);
-
-//    drawcube(0.24,0.031,0.016);
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-
-    //laptop
 }
 
-void draw_cupboard()
+
+
+void draw_counter()
 {
-
-
-
-    //body
+    //front
     glEnable(GL_TEXTURE_2D);
     glPushMatrix();
-    glScalef(2,8,4);
-    glTranslatef(0,-5,0);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\cb.bmp");
+    glScalef(7,10,20);
+    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\cn3.bmp");
     drawcube(1,1,1);
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
-    //body
+    //front
 
-    //door
+    //side1
     glEnable(GL_TEXTURE_2D);
     glPushMatrix();
-    glScalef(.005,8,2);
-    glTranslatef(800,-5,0);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\cb1.bmp");
+    glScalef(9,10,2);
+    glTranslatef(-2.0,0,0);
+    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\cn3.bmp");
     drawcube(1,1,1);
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 
+    //side1
+
+
+    //side2
     glEnable(GL_TEXTURE_2D);
     glPushMatrix();
-    glScalef(.005,8,2);
-    glTranslatef(800,-5,-2);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\cb1.bmp");
+    glScalef(9,10,2);
+    glTranslatef(-2.0,0,-18);
+    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\cn3.bmp");
     drawcube(1,1,1);
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 
-    glEnable(GL_TEXTURE_2D);
-    glPushMatrix();
-    glScalef(.005,8,.2);
-    glTranslatef(801,-5,-20);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\cb.bmp");
-    drawcube(1,1,1);
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-
-    glEnable(GL_TEXTURE_2D);
-    glPushMatrix();
-    glScalef(.5,1,.5);
-    glTranslatef(7,-30,-3);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\cb2.bmp");
-    drawcube(1,1,1);
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-
-    glEnable(GL_TEXTURE_2D);
-    glPushMatrix();
-    glScalef(.5,1,.5);
-    glTranslatef(7,-30,-12);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\cb2.bmp");
-    drawcube(1,1,1);
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-    //door
-
-
+    //side2
 }
+
 
 
 void draw_room()
@@ -641,9 +415,10 @@ void draw_room()
     //floor
     glEnable(GL_TEXTURE_2D);
     glPushMatrix();
-    glScalef(20,.001,20);
+    glScalef(40,.001,40);
 //    glTranslatef(-3,-3,0);
-LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\fl1.bmp");
+//F:\captures\4-2\zlabs\Graphics\git\Computer-Graphics\Lab3\ProjectProgress
+LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\bmf2.bmp");
     drawcube(1,1,1);
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
@@ -652,10 +427,10 @@ LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\T
     //wall1
     glEnable(GL_TEXTURE_2D);
     glPushMatrix();
-    glScalef(.001,20,20);
+    glScalef(.001,20,40);
 //    glTranslatef(-20000,0,0);
 //    drawcube(.039,.26,.59);
-LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wl1.bmp");
+LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\wl5.bmp");
     drawcube(1,1,1);
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
@@ -664,9 +439,11 @@ LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\T
     //wall2
     glEnable(GL_TEXTURE_2D);
     glPushMatrix();
-    glScalef(.001,20,20);
-    glTranslatef(40000,0,0);
-    LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wl1.bmp");
+    glScalef(.001,20,40);
+    glTranslatef(80000,0,0);
+    glRotatef(180,0,1,0);
+    glTranslatef(0,0,2);
+   LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\wl5.bmp");
     drawcube(1,1,1);
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
@@ -675,9 +452,9 @@ LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\T
     //wall3
     glEnable(GL_TEXTURE_2D);
     glPushMatrix();
-    glScalef(20,20,.001);
+    glScalef(40,20,.001);
 //    glTranslatef(20000,0,0);
-LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\TextureHw\\RoomWithTexture\\wl1.bmp");
+LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\wl5.bmp");
     drawcube(1,1,1);
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
@@ -688,57 +465,13 @@ LoadTexture("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\T
 void drawfan()
 {
 
-    //body
-//    glPushMatrix();
-//    glTranslatef(30,0,0);
-//    drawcylinder(1,0,1,.05,0,0,.05,0,0,60);
-//    glPopMatrix();
-//
-//    glPushMatrix();
-//    glScalef(1,.2,.3);
-//    glTranslatef(0,10,-30);
-//
-//    drawcube(1,1,0.0,0.03,0.0,0,0.03,0,0,60);
-//    glPopMatrix();
-    //body
+    glPushMatrix();
+    glScalef(1,35,1);
 
-    //blades
-//    glPushMatrix();
-//    glScalef(3,.1,.3);
-//    glTranslatef(.6,19,-30);
-//    drawcube(0.54,0.05,0.0,0.03,0.0,0,0.03,0,0,60);
-//    glPopMatrix();
-//
-//    glPushMatrix();
-//    glScalef(3,.1,.3);
-//    glTranslatef(-2,19,-30);
-//    drawcube(0.54,0.05,0.0,0.03,0.0,0,0.03,0,0,60);
-//    glPopMatrix();
-//
-//    glPushMatrix();
-//    glScalef(.5,.1,3);
-//    glTranslatef(2,17,-1.2);
-////    glRotatef(90,0,0,1);
-//    drawcube(0.54,0.05,0.0,0.03,0.0,0,0.03,0,0,60);
-//    glPopMatrix();
-//
-//
-//    glPushMatrix();
-//    glScalef(.5,.1,3);
-//    glTranslatef(2,17,-2.2);
-////    glRotatef(90,0,0,1);
-//    drawcube(0.54,0.05,0.0,0.03,0.0,0,0.03,0,0,60);
-//    glPopMatrix();
-    //blades
+    drawcube(0.54,0.05,0.0);
+    glPopMatrix();
 
-    //stand
 
-//    glPushMatrix();
-//    glScalef(.2,4,.2);
-//    glTranslatef(8,.5,-45);
-////    glRotatef(90,0,0,1);
-//    drawcube(0.54,0.05,0.0,0.03,0.0,0,0.03,0,0,60);
-//    glPopMatrix();
 
     glPushMatrix();
 
@@ -774,20 +507,51 @@ void drawfan()
 
 }
 
-void drawstand()
+
+
+void draw_holder(GLfloat r,GLfloat g,GLfloat b)
 {
-//        stand
+    GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_ambient[] = { r, g, b, 1.0 };
+    GLfloat mat_diffuse[] = { r, g, b, 1.0 };
+    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat mat_shininess[] = {60};
+
+    GLfloat mat_em[] = {1.0,1.0,1.0,1.0};
+
+    glMaterialfv( GL_FRONT, GL_AMBIENT, mat_ambient);
+    glMaterialfv( GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv( GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialfv( GL_FRONT, GL_SHININESS, mat_shininess);
 
     glPushMatrix();
-    glScalef(.2,4,.2);
-    glTranslatef(8,.5,-45);
-    glRotatef(90,0,0,1);
-    drawcube(0.54,0.05,0.0);
+    glTranslatef(12,12,8);
+    glRotatef(-90,1,0,0);
+    glutSolidCone(2.0,3.0,16,20);
     glPopMatrix();
-
-//    stand
-
 }
+
+void draw_bulb(GLfloat r,GLfloat g,GLfloat b)
+{
+    GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_ambient[] = { r, g, b, 1.0 };
+    GLfloat mat_diffuse[] = { r, g, b, 1.0 };
+    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat mat_shininess[] = {60};
+
+    GLfloat mat_em[] = {1.0,1.0,1.0,1.0};
+
+    glMaterialfv( GL_FRONT, GL_AMBIENT, mat_ambient);
+    glMaterialfv( GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv( GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialfv( GL_FRONT, GL_SHININESS, mat_shininess);
+
+    glPushMatrix();
+    glTranslatef(12,12,8);
+    glutSolidSphere(1.0,16,20);
+    glPopMatrix();
+}
+
 
 
 void drawlamp()
@@ -809,53 +573,6 @@ void drawlamp()
 
 //    drawcube(0.24,0.031,0.016);
     glPopMatrix();
-}
-
-
-
-void drawsphere()
-{
-    GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
-    GLfloat mat_ambient[] = { 0.5, 0.5, 0.5, 1.0 };
-    GLfloat mat_diffuse[] = { 0.3, 0.0, 0.0, 1.0 };
-    GLfloat mat_specular[] = { 0.3, 0.0, 0.0, 1.0 };
-    GLfloat mat_shininess[] = {80};
-
-    glMaterialfv( GL_FRONT, GL_AMBIENT, mat_ambient);
-    glMaterialfv( GL_FRONT, GL_DIFFUSE, mat_diffuse);
-    glMaterialfv( GL_FRONT, GL_SPECULAR, mat_specular);
-    glMaterialfv( GL_FRONT, GL_SHININESS, mat_shininess);
-
-    /*
-    //glColor3f(1,0,0);
-    glBegin(GL_TRIANGLES);
-    for (GLint i = 0; i <4; i++)
-    {
-        //glColor3f(colors[i][0],colors[i][1],colors[i][2]);
-        getNormal3p(v_pyramid[p_Indices[i][0]][0], v_pyramid[p_Indices[i][0]][1], v_pyramid[p_Indices[i][0]][2],
-                    v_pyramid[p_Indices[i][1]][0], v_pyramid[p_Indices[i][1]][1], v_pyramid[p_Indices[i][1]][2],
-                    v_pyramid[p_Indices[i][2]][0], v_pyramid[p_Indices[i][2]][1], v_pyramid[p_Indices[i][2]][2]);
-        glVertex3fv(&v_pyramid[p_Indices[i][0]][0]);
-        glVertex3fv(&v_pyramid[p_Indices[i][1]][0]);
-        glVertex3fv(&v_pyramid[p_Indices[i][2]][0]);
-    }
-    glEnd();
-    glBegin(GL_QUADS);
-    for (GLint i = 0; i <1; i++)
-    {
-        //glColor3f(colors[4][0],colors[4][1],colors[4][2]);
-        getNormal3p(v_pyramid[quadIndices[i][0]][0], v_pyramid[quadIndices[i][0]][1], v_pyramid[quadIndices[i][0]][2],
-                    v_pyramid[quadIndices[i][1]][0], v_pyramid[quadIndices[i][1]][1], v_pyramid[quadIndices[i][1]][2],
-                    v_pyramid[quadIndices[i][2]][0], v_pyramid[quadIndices[i][2]][1], v_pyramid[quadIndices[i][2]][2]);
-        glVertex3fv(&v_pyramid[quadIndices[i][0]][0]);
-        glVertex3fv(&v_pyramid[quadIndices[i][1]][0]);
-        glVertex3fv(&v_pyramid[quadIndices[i][2]][0]);
-        glVertex3fv(&v_pyramid[quadIndices[i][3]][0]);
-    }
-    glEnd();
-    */
-    glutSolidSphere (2.0, 20, 16);
-
 }
 
 
@@ -908,26 +625,69 @@ void display(void)
     draw_room();
     glPopMatrix();
 
+//__________________chair tables_____________________
 
     glPushMatrix();
-    glTranslatef(-13,-20,-13);
-    drawbed();
+    glTranslatef(5,-20,-42);
+//    glRotatef(90,0,1,0);
+    draw_table();
     glPopMatrix();
 
     glPushMatrix();
-    glTranslatef(5,-20,-17);
-    draw_chair_table();
+    glTranslatef(5,-20,-27);
+//    glRotatef(90,0,1,0);
+    draw_table();
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glTranslatef(-55,-20,-42);
+//    glRotatef(90,0,1,0);
+    draw_table();
     glPopMatrix();
 
     glPushMatrix();
-    glTranslatef(0,10,-40);
-    glRotatef(-90,0,1,0);
-    draw_cupboard();
+    glTranslatef(-55,-20,-27);
+//    glRotatef(90,0,1,0);
+    draw_table();
     glPopMatrix();
+
+
+    glPushMatrix();
+    glTranslatef(5,-20,-27);
+//    glRotatef(90,0,1,0);
+    draw_table();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(5,-20,-12);
+//    glRotatef(90,0,1,0);
+    draw_table();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(5,-20,3);
+//    glRotatef(90,0,1,0);
+    draw_table();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(5,-20,18);
+//    glRotatef(90,0,1,0);
+    draw_table();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(5,-20,23);
+//    glRotatef(90,0,1,0);
+    draw_table();
+    glPopMatrix();
+
+//________Chair tables_________________
 
     glPushMatrix();
     glScalef(.1,.1,.1);
-    glTranslatef(0,90,-200);
+    glTranslatef(120,90,-380);
 //    glRotatef(-90,0,1,0);
 glRotatef( alpha,axis_x, axis_y, 0.0 );
 //    glRotatef( theta, axis_x, axis_y, 0.0 );
@@ -937,42 +697,101 @@ glRotatef( alpha,axis_x, axis_y, 0.0 );
 
 
     glPushMatrix();
-    glTranslatef(-1.5,7,-11);
-    drawstand();
+    glScalef(.1,.1,.1);
+    glTranslatef(120,90,260);
+//    glRotatef(-90,0,1,0);
+glRotatef( alpha,axis_x, axis_y, 0.0 );
+//    glRotatef( theta, axis_x, axis_y, 0.0 );
+
+    drawfan();
     glPopMatrix();
 
     glPushMatrix();
-    glTranslatef(19,-5,-9.5);
-    glRotatef(90,0,0,1);
-    drawlamp();
+    glScalef(.1,.1,.1);
+    glTranslatef(120,90,160);
+//    glRotatef(-90,0,1,0);
+glRotatef( alpha,axis_x, axis_y, 0.0 );
+//    glRotatef( theta, axis_x, axis_y, 0.0 );
+
+    drawfan();
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(.1,.1,.1);
+    glTranslatef(120,90,60);
+//    glRotatef(-90,0,1,0);
+glRotatef( alpha,axis_x, axis_y, 0.0 );
+//    glRotatef( theta, axis_x, axis_y, 0.0 );
+
+    drawfan();
+    glPopMatrix();
+
+
+
+
+    glPushMatrix();
+    glScalef(.1,.1,.1);
+    glTranslatef(120,90,-160);
+//    glRotatef(-90,0,1,0);
+glRotatef( alpha,axis_x, axis_y, 0.0 );
+//    glRotatef( theta, axis_x, axis_y, 0.0 );
+
+    drawfan();
+    glPopMatrix();
+
+
+
+    glPushMatrix();
+    glScalef(.1,.1,.1);
+    glTranslatef(120,90,-260);
+//    glRotatef(-90,0,1,0);
+glRotatef( alpha,axis_x, axis_y, 0.0 );
+//    glRotatef( theta, axis_x, axis_y, 0.0 );
+
+    drawfan();
     glPopMatrix();
 
 
     glPushMatrix();
-    glScalef(.4,.4,.4);
-    glTranslatef(45,-50,-35);
-    drawsphere();
+    glScalef(.1,.1,.1);
+    glTranslatef(120,90,-40);
+//    glRotatef(-90,0,1,0);
+glRotatef( alpha,axis_x, axis_y, 0.0 );
+//    glRotatef( theta, axis_x, axis_y, 0.0 );
+
+    drawfan();
     glPopMatrix();
+
 
     glPushMatrix();
-    glScalef(.7,.5,.7);
-    glTranslatef(-25,-20,-28);
-
-    glRotatef(-5,0,1,0);
-    draw_cupboard();
+    glTranslatef(-41,-29,30.5);
+    draw_counter();
     glPopMatrix();
+
 
     glPushMatrix();
-    glScalef(.4,.4,.4);
-    glTranslatef(45,-50,-35);
-    drawsphere();
+    glTranslatef(-25,0,7);
+    draw_holder(.3,.3,.4);
+    draw_bulb(0.85,0.85,0.85);
     glPopMatrix();
 
+
     glPushMatrix();
-//    glScalef(.4,.4,.4);
-    glTranslatef(-15,-20,-23);
-    drawsphere();
+    glTranslatef(-25,0,-15);
+    draw_holder(.3,.3,.4);
+    draw_bulb(0.85,0.85,0.85);
     glPopMatrix();
+
+
+
+
+    glPushMatrix();
+    glTranslatef(-25,0,-50);
+    draw_holder(.3,.3,.4);
+    draw_bulb(0.85,0.85,0.85);
+    glPopMatrix();
+
+
 
     glFlush();
     glutSwapBuffers();
