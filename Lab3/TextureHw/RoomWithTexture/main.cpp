@@ -39,9 +39,14 @@ GLfloat upZ = 0;
 
 double limit = 360;
 double roll_value = 5;
-GLfloat angleRoll = 20.0;
-GLfloat angleRollLimit1 = -180;
-GLfloat angleRollLimit2 = 180;
+GLfloat angleYaw = 90.0, anglePitch = 90.0, angleRoll = 90.0;
+GLfloat angleYawLimit1 = 180.0, anglePitchLimit1 = 180.0, angleRollLimit1 = 270.0;
+GLfloat angleYawLimit2 = 0.0, anglePitchLimit2 = 0.0, angleRollLimit2 = -90.0;
+int f=0;
+double scale_x = 1;
+double scale_y = 1;
+double scale_z = 1;
+int bv = 0;
 
 void setCameraEye_Roll() // z axis ,i o
 {
@@ -49,6 +54,32 @@ void setCameraEye_Roll() // z axis ,i o
     upX = (cos(angleRoll*3.1416/180.0));//-sin(angleYaw*3.1416/180.0));
     upY = (sin(angleRoll*3.1416/180.0));//+cos(angleYaw*3.1416/180.0));
 }
+
+
+void b_swap()
+{
+    if(bv==1)
+    {
+        int tmp = eyeY;
+        eyeY = eyeZ;
+        eyeZ = tmp;
+
+        tmp = upY;
+        upY = upZ;
+        upZ = tmp;
+
+    }
+}
+
+void bird_view()
+{
+//     init(6);
+//     f=6;
+    bv = 1;
+    b_swap();
+
+}
+
 
 void CALLBACK errorCallback(GLenum errorCode)
 {
