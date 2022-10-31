@@ -30,9 +30,10 @@ double centerz = 0;
 unsigned int ID,ID1;
 double Txval=0,Tyval=0,Tzval=0;
 double windowHeight=700, windowWidth=700;
-GLfloat fAng=0, ovAng=0,alpha = 0.0, alpha2=0.0, falpha=0.0,theta = 0.0, axis_x=0.0, axis_y=0.0,axis_z=0.0,tx=0,ty=0,tz=0,wdx=2.0,wcm1=2.0,wcm2=0.0;
+GLfloat fAng=0, ovAng=0,alpha = 0.0, alpha2=0.0, falpha=0.0,xx=-4.499998,yy=-4.499998+.2,theta = 0.0, axis_x=0.0, axis_y=0.0,axis_z=0.0,px=10.100002,py=26.700066,pz=-4.499998,tx=0,ty=0,tz=0,wdx=2.0,wcm1=2.0,wcm2=0.0;
 GLboolean wt1=false,wt2=false,wt3=false,wt4=false,wt5=false,wt6=false,wtr=false,wtr2=false,wtr3=false,bRotate = false, fdRotate=false ,uRotate = false,lgt0 = true,lgt1=true,lgt2=true,lgt3=true,fRotate= false, cRotate= true,vRotate=false,wdf=true,wdr=false;
 static GLfloat spin = 0.0;
+int cnt=0;
 
 int l1=1, l2=1,aa=1,ad=1,as=1,ba=1,bd=1,bs=1;
 
@@ -533,6 +534,15 @@ void drawkorai(GLfloat r, GLfloat g, GLfloat b)
     glTranslatef(2.300000, -6.499996, 0.000000);
     drawcube2(0,0,0);
     glPopMatrix();
+
+    GT;
+    PM;
+    glBindTexture(GL_TEXTURE_2D,24);
+    glScalef(.8,.3,.6);
+    glTranslatef(-1.000000, -6.499996, 0.000000);
+    drawcube2(1,1,1);
+    PP;
+    GD;
 }
 
 
@@ -1180,11 +1190,11 @@ void drawteapot(GLfloat r,GLfloat g,GLfloat b)
 void drawfan()
 {
 
-    glPushMatrix();
-    glScalef(1,35,1);
-
-    drawcube(0.54,0.05,0.0);
-    glPopMatrix();
+//    glPushMatrix();
+//    glScalef(1,35,1);
+//
+//    drawcube(0.54,0.05,0.0);
+//    glPopMatrix();
 
 
 
@@ -2245,6 +2255,25 @@ void drawoven()
     drawcube2(1,1,1);
     PP;
     GD;
+
+
+    //panin
+    PM;
+//    glRotatef(-90,0,1,0);
+    glScalef(.4,.4,.4);
+    glTranslatef(px,py,pz);
+    drawkorai(.5,.5,.5);
+    PP;
+
+//    GT;
+//    PM;
+//    glBindTexture(GL_TEXTURE_2D,24);
+//    glScalef(.5,.3,.2);
+//    glTranslatef(6.399996, 32.600075, -8.399996);
+//    drawcube2(1,1,1);
+//    PP;
+//    GD;
+    //panin
 }
 
 
@@ -2267,6 +2296,54 @@ void display(void)
     glRotatef( theta, axis_x, axis_y, 0.0 );
 
 
+
+    //FANSTADS
+    glPushMatrix();
+    glScalef(.1,3,.1);
+    glTranslatef(119.000000, 1.000000, 61.000000);
+    drawcube(0.54,0.05,0.0);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(.1,3,.1);
+    glTranslatef(119.000000, 1.000000, -38.000000);
+    drawcube(0.54,0.05,0.0);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(.1,3,.1);
+    glTranslatef(119.000000, 1.000000, -379.000000);
+    drawcube(0.54,0.05,0.0);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(.1,3,.1);
+    glTranslatef(119.000000, 1.000000, -259.000000);
+    drawcube(0.54,0.05,0.0);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(.1,3,.1);
+    glTranslatef(119.000000, 1.000000, -159.000000);
+    drawcube(0.54,0.05,0.0);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(.1,3,.1);
+    glTranslatef(119.000000, 1.000000, 161.000000);
+    drawcube(0.54,0.05,0.0);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(.1,3,.1);
+    glTranslatef(119.000000, 1.000000, 262.000000);
+    drawcube(0.54,0.05,0.0);
+    glPopMatrix();
+
+
+    //FANSTANDS
+
+
     //stove
     PM;
     glScalef(2.5,1.5,.8);
@@ -2275,7 +2352,14 @@ void display(void)
     PP;
     //stove
 
-    //
+//    //panin
+//    PM;
+//    glRotatef(-90,0,1,0);
+//    glScalef(.7,.7,.7);
+//    glTranslatef(tx,ty,tz);
+//    drawkorai(.5,.5,.5);
+//    PP;
+//    //panin
 
 
     //cfm
@@ -3369,11 +3453,11 @@ void myKeyboardFunc( unsigned char key, int x, int y )
         break;
 
     case '7':
-        tx-=.1;
+        tx-=1;
         printf("%lf %lf %lf\n",tx,ty,tz);
         break;
     case '8':
-        tx+=.1;
+        tx+=1;
         printf("%lf %lf %lf\n",tx,ty,tz);
         break;
     case '9':
@@ -3385,11 +3469,11 @@ void myKeyboardFunc( unsigned char key, int x, int y )
         printf("%lf %lf %lf\n",tx,ty,tz);
         break;
     case '[':
-        tz-=.1;
+        tz-=1;
         printf("%lf %lf %lf\n",tx,ty,tz);
         break;
     case ']':
-        tz+=.1;
+        tz+=1;
         printf("%lf %lf %lf\n",tx,ty,tz);
         break;
 
@@ -3411,6 +3495,36 @@ void myKeyboardFunc( unsigned char key, int x, int y )
         if(ovAng<40)
             ovAng+=1;
         break;
+
+
+    case 'E':
+        py-=.1;
+//        printf("%lf %lf %lf\n",tx,ty,tz);
+        break;
+    case 'R':
+        py+=.1;
+//        printf("%lf %lf %lf\n",tx,ty,tz);
+        break;
+    case 'T':
+        pz-=.1;
+//        printf("%lf %lf %lf\n",tx,ty,tz);
+        break;
+    case 'Y':
+        pz+=.1;
+//        printf("%lf %lf %lf\n",tx,ty,tz);
+        break;
+
+    case 'H':
+
+
+
+        cnt+=1;
+        if(cnt%2)
+            pz+=.5;
+        else
+            pz-=.5;
+        break;
+
 
 
 
@@ -3593,6 +3707,7 @@ int main (int argc, char **argv)
     LoadTexture2("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\cm1.bmp");///21
     LoadTexture2("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\cm2.bmp");///22
     LoadTexture2("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\cm3.bmp");///23
+    LoadTexture2("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\mt.bmp");///24
 //    light1();
     glutKeyboardFunc(myKeyboardFunc);
     glutDisplayFunc(display);
