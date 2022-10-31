@@ -495,8 +495,14 @@ void drawjar(GLfloat r, GLfloat g, GLfloat b)
 
     glPushMatrix();
     glRotatef(90,1,0,0);
+//    glTranslatef(tx,ty,0);
+    drawdisk(r,g,b,false,.002,2);
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
     glTranslatef(0.000000, 0.000000, -1.100000);
-    drawcylinder(g,b,r,false,2,2);
+    drawcylinder(g,b,r,false,1.7,1.7);
     glPopMatrix();
     glPushMatrix();
     glRotatef(90,1,0,0);
@@ -506,7 +512,7 @@ void drawjar(GLfloat r, GLfloat g, GLfloat b)
     glPushMatrix();
     glRotatef(90,1,0,0);
     glTranslatef(0.000000, 0.000000, -1.100000);
-    drawdisk(g,b,r,false,.002,2);
+    drawdisk(g,b,r,false,.002,1.7);
     glPopMatrix();
 }
 
@@ -526,6 +532,33 @@ void drawkorai(GLfloat r, GLfloat g, GLfloat b)
     glScalef(1.7,.6,.2);
     glTranslatef(2.300000, -6.499996, 0.000000);
     drawcube2(0,0,0);
+    glPopMatrix();
+}
+
+
+void drawbottle(GLfloat r, GLfloat g, GLfloat b)
+{
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+    drawcylinder(r,g,b,false,1,1,4);
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+    glTranslatef(0.000000, 0.000000, -2.200000);
+    drawcylinder(r,g,b,false,.3,.3,3);
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+    drawdisk(r,g,b,false,.0002,1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+    glTranslatef(0.000000, 0.000000, 3.999998);
+    drawdisk(r,g,b,false,.0002,1);
     glPopMatrix();
 }
 
@@ -1586,19 +1619,26 @@ glRotatef( alpha,axis_x, axis_y, 0.0 );
     glPopMatrix();
 
 
+//    glPushMatrix();
+//    glTranslatef(-49.799812,-5,9.900002);
+//    draw_holder(.3,.3,.4);
+//    draw_bulb(0.85,0.85,0.85);
+//    glPopMatrix();
+
+
     glPushMatrix();
     glTranslatef(-25,-5,-15);
     draw_holder(.3,.3,.4);
     draw_bulb(0.85,0.85,0.85);
     glPopMatrix();
 
-    glEnable(GL_TEXTURE_2D);
-    glPushMatrix();
-    glTranslatef(-35.200035, -7.799995, 27.000065);
-    glBindTexture(GL_TEXTURE_2D, 8);
-    drawteapot(1,1,1);
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
+//    glEnable(GL_TEXTURE_2D);
+//    glPushMatrix();
+//    glTranslatef(-35.200035, -7.799995, 27.000065);
+//    glBindTexture(GL_TEXTURE_2D, 8);
+//    drawteapot(1,1,1);
+//    glPopMatrix();
+//    glDisable(GL_TEXTURE_2D);
 
 
     glEnable(GL_TEXTURE_2D);
@@ -1782,15 +1822,302 @@ glDisable(GL_TEXTURE_2D);
 //        glRotatef(90, 1, 0, 0 );
 //        glScalef(2, 2, 2);
 //        drawcylinder( .5,.3,.4,false,5,3,9);
-//        drawcup();
-drawtool(0.6,0.8,1);
+//        drawcup(.5,.4,.3);
+//drawjar(.3,.4,.5);
+//drawkorai(.4,.3,.5);
+//drawtool(0.6,0.8,1);
 //glRotatef(90,1,0,0);
+//drawbottle(.5,.5,.5);
 //drawdisk();
 
     glPopMatrix();
 
 
 //sink
+
+
+//decorations
+
+
+
+    //shelf
+
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glScalef(3,.2,9);
+    glTranslatef(-19.900040, 0.000000, -0.700000);
+    glBindTexture(GL_TEXTURE_2D, 17);
+    drawcube2(1,1,1);
+    glPopMatrix();
+
+    glDisable(GL_TEXTURE_2D);
+
+    //shelf
+
+
+    //objects on shelf
+
+    glPushMatrix();
+    glScalef(1,1,1);
+    glTranslatef(-57.799690, 4.799998, 28.800074);
+    drawbottle(.6,.8,1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(1,1,1);
+    glTranslatef(-57.799690, 4.799998, 26.500065);
+    drawbottle(.6,.8,1);
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glScalef(1,1,1);
+    glTranslatef(-57.799690, 4.799998, 24.500065);
+    drawbottle(.5,.3,.4);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(1,1,1);
+    glTranslatef(-57.799690, 4.799998, 22.500065);
+    drawbottle(.5,.4,.4);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(1,1,1);
+    glTranslatef(-57.799690, 4.799998, 20.500065);
+    drawbottle(.3,.4,.4);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(1,1,1);
+    glTranslatef(-57.799690, 4.799998, 18.500065);
+    drawbottle(.3,.2,.4);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(1,1,1);
+    glTranslatef(-57.799690, 4.799998, 16.500065);
+    drawbottle(.5,.5,.5);
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glScalef(1,1,1);
+    glTranslatef(-57.799690, 4.799998, 14.500065);
+    drawbottle(.7,.7,.0007);
+    glPopMatrix();
+
+
+
+    glPushMatrix();
+    glScalef(1,1,1);
+    glTranslatef(-56.899704, 5.799997, 11.600008);
+    drawjar(.7,.7,.0007);
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glScalef(1,1,1);
+    glTranslatef(-56.899704, 5.799997, 7.299995);
+    drawjar(.6,.8,1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(1,1,1);
+    glTranslatef(-56.899704, 5.799997, 2.899995);
+    drawjar(.5,.3,.4);
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glScalef(1,1,1);
+    glTranslatef(-56.899704, 5.799997, -1.699995);
+    drawjar(.5,.5,.5);
+    glPopMatrix();
+
+
+
+    glPushMatrix();
+    glScalef(1,1,1);
+    glTranslatef(-51.999779, 3.899999, 24.400057);
+    drawcup(.5,.3,.4);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(1,1,1);
+    glTranslatef(-51.999779, 3.899999, 20.400042);
+    drawcup(.3,.5,.4);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(1,1,1);
+    glTranslatef(-51.999779, 3.899999, 16.400042);
+    drawcup(.5,.5,.4);
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glScalef(1,1,1);
+    glTranslatef(-51.999779, 3.899999, 12.400042);
+    drawcup(1,1,.0004);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(1,1,1);
+    glTranslatef(-51.999779, 3.899999, 8.400042);
+    drawcup(.6,.8,1);
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glScalef(1,1,1);
+    glTranslatef(-51.999779, 3.899999, 4.400042);
+    drawcup(.002,.8,.6);
+    glPopMatrix();
+
+    //objects on shelf
+
+
+    //objects on counter
+
+
+
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glTranslatef(-34.700043, -7.899995, 16.700027);
+    glBindTexture(GL_TEXTURE_2D, 18);
+    drawteapot(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glTranslatef(-34.700043, -7.899995, 13.400015);
+    glBindTexture(GL_TEXTURE_2D, 18);
+    drawteapot(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glTranslatef(-34.700043, -7.899995, 10.400015);
+    glBindTexture(GL_TEXTURE_2D, 18);
+    drawteapot(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glTranslatef(-34.700043, -7.899995, 7.400015);
+    glBindTexture(GL_TEXTURE_2D, 18);
+    drawteapot(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
+
+
+    glPushMatrix();
+    glScalef(1,1,1);
+    glTranslatef(-34.800041, -3.899998, 3.599999);
+    drawjar(.6,.8,.4);
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glScalef(1,1,1);
+    glTranslatef(-34.800041, -3.899998, -.81);
+    drawjar(.5,.3,.4);
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glScalef(1,1,1);
+    glRotatef(180,1,0,0);
+    glTranslatef(-36.700012, 8.999998, -21.800047);
+    drawcup(.002,.8,.6);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(1,1,1);
+    glRotatef(180,1,0,0);
+    glTranslatef(-36.700012, 8.999998, -25.800047);
+    drawcup(.3,.5,.4);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(1,1,1);
+    glRotatef(180,1,0,0);
+    glTranslatef(-32.700012, 8.999998, -21.800047);
+    drawcup(.5,.3,.4);
+    glPopMatrix();
+
+
+
+    glPushMatrix();
+    glScalef(1,1,1);
+    glRotatef(180,1,0,0);
+    glTranslatef(-32.700012, 8.999998, -25.800047);
+    drawcup(.9,.1,.1);
+    glPopMatrix();
+
+
+
+
+
+    //objects on counter
+
+
+    //objects on table]
+
+
+
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glTranslatef(12.700012, 19.900040, 9.600000);
+    glBindTexture(GL_TEXTURE_2D, 19);
+    drawteapot(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
+
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glTranslatef(12.700012, 19.900040,  23.400053);
+    glBindTexture(GL_TEXTURE_2D, 19);
+    drawteapot(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glTranslatef(-49.699814, 19.900040,  23.400053);
+    glBindTexture(GL_TEXTURE_2D, 19);
+    drawteapot(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
+
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glTranslatef(-49.699814, 19.900040,  9.400053);
+    glBindTexture(GL_TEXTURE_2D, 19);
+    drawteapot(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
+
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glTranslatef(-49.699814, 19.900040,  -7.200053);
+    glBindTexture(GL_TEXTURE_2D, 19);
+    drawteapot(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
+
+    //objects on table
+
+//decorations
 
 
 //kitchen scene
@@ -1807,6 +2134,9 @@ drawtool(0.6,0.8,1);
     light(-18.500034, 37.699997, 18.700035,lgt1,GL_LIGHT1,true,false);
 
     light(-18.500034, 37.699997, 0,lgt2,GL_LIGHT2,true,false);
+
+
+//    light(-42.699921, 18.100031, 18.600035,lgt3,GL_LIGHT3,true,false);
 
     glFlush();
     glutSwapBuffers();
@@ -1884,6 +2214,11 @@ void myKeyboardFunc( unsigned char key, int x, int y )
         break;
     case 'b':
         lgt2 = !lgt2;
+        glutPostRedisplay();
+        break;
+
+    case 'B':
+        lgt3 = !lgt3;
         glutPostRedisplay();
         break;
 
@@ -2148,6 +2483,9 @@ int main (int argc, char **argv)
     LoadTexture2("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\snk.bmp");///14
     LoadTexture2("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\stl.bmp");///15
     LoadTexture2("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\bkwl.bmp");///16
+    LoadTexture2("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\shf.bmp");///17
+    LoadTexture2("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\tp2.bmp");///18
+    LoadTexture2("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\tp3.bmp");///19
 //    light1();
     glutKeyboardFunc(myKeyboardFunc);
     glutDisplayFunc(display);
