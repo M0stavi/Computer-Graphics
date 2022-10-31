@@ -14,7 +14,15 @@
 #define CALLBACK
 #endif
 
-double radius = 200;
+#define PM glPushMatrix()
+#define PP glPopMatrix()
+#define GT glEnable(GL_TEXTURE_2D)
+#define GD glDisable(GL_TEXTURE_2D);
+#include <chrono>
+#include <ctime>
+auto start = std::chrono::system_clock::now();
+
+
 double centerx = 0;
 double centery = 6;
 double centerz = 0;
@@ -22,8 +30,8 @@ double centerz = 0;
 unsigned int ID,ID1;
 double Txval=0,Tyval=0,Tzval=0;
 double windowHeight=700, windowWidth=700;
-GLfloat alpha = 0.0, alpha2=0.0, theta = 0.0, axis_x=0.0, axis_y=0.0,axis_z=0.0,tx=0,ty=0,tz=0;
-GLboolean bRotate = false, uRotate = false,lgt0 = true,lgt1=true,lgt2=true,lgt3=true,fRotate= false, cRotate= true,vRotate=false;
+GLfloat fAng=0, ovAng=0,alpha = 0.0, alpha2=0.0, falpha=0.0,theta = 0.0, axis_x=0.0, axis_y=0.0,axis_z=0.0,tx=0,ty=0,tz=0,wdx=2.0,wcm1=2.0,wcm2=0.0;
+GLboolean wt1=false,wt2=false,wt3=false,wt4=false,wt5=false,wt6=false,wtr=false,wtr2=false,wtr3=false,bRotate = false, fdRotate=false ,uRotate = false,lgt0 = true,lgt1=true,lgt2=true,lgt3=true,fRotate= false, cRotate= true,vRotate=false,wdf=true,wdr=false;
 static GLfloat spin = 0.0;
 
 int l1=1, l2=1,aa=1,ad=1,as=1,ba=1,bd=1,bs=1;
@@ -32,8 +40,8 @@ GLuint startList;
 
 GLfloat eyeX = 2-15-15+2-20+38-43;
 GLfloat eyeY = 3+15;
-GLfloat eyeZ = 10+30+2+6+3+17;
-
+GLfloat eyeZ = 10+30+2+6+3+17+40;
+double radius = eyeZ;
 GLfloat lookX = 2-15-15+2-20+38-43;
 GLfloat lookY = 3+15;
 GLfloat lookZ = 0+30+2+6+3+17;
@@ -75,12 +83,13 @@ void init(int d)
         angleYaw = 90.0;
         anglePitch = 270.0;
         angleRoll = 90.0;
-        eyeX = 0;
-        eyeY = 35;
+        eyeX = 2-15-15+2-20+38-43;
+        eyeY = 3+15;
         eyeZ = radius;
-        centerx = 0;
-        centery = 35;
-        centerz = 0;
+
+        lookX = 2-15-15+2-20+38-43;
+        lookY = 3+15;
+        lookZ = 0+30+2+6+3+17;
         upX = 0;
         upY = 1;
         upZ = 0;
@@ -97,8 +106,8 @@ void setCameraEye_Yaw() /// y axis , y u
 {
     init(1);
     f=1;
-    centerx = eyeX+radius*(cos(angleYaw*3.1416/180.0));
-    centerz = eyeZ+radius*(sin(angleYaw*3.1416/180.0));
+    lookX = eyeX+radius*(cos(angleYaw*3.1416/180.0));
+    lookZ = eyeZ+radius*(sin(angleYaw*3.1416/180.0));
 
 //    eyex = 200.0*(cos(angleYaw*3.1416/180.0));//-sin(anglePitch*3.1416/180.0));
 //    eyez = 200.0*(sin(angleYaw*3.1416/180.0));//+cos(anglePitch*3.1416/180.0));
@@ -110,15 +119,6 @@ void setCameraEye_Roll() // z axis ,i o
     //f=2;
     upX = (cos(angleRoll*3.1416/180.0));//-sin(angleYaw*3.1416/180.0));
     upY = (sin(angleRoll*3.1416/180.0));//+cos(angleYaw*3.1416/180.0));
-//    eyex = 200.0*sin(angleYaw*3.1416/180.0);
-//    eyey = 200.0*(cos(angleYaw*3.1416/180.0));
-//    upx = 1;
-//    upy = 1;
-//    upz = 1;
-
-//    upx = eyex;
-//    upy = eyey;
-//    upz = 0;
 }
 
 void setCameraEye_Pitch() // x axis , r t
@@ -126,8 +126,8 @@ void setCameraEye_Pitch() // x axis , r t
     init(3);
     f=3;
 
-    centery = eyeY+radius*(cos(anglePitch*3.1416/180.0));
-    centerz = eyeZ+radius*(sin(anglePitch*3.1416/180.0));
+    lookY = eyeY+radius*(cos(anglePitch*3.1416/180.0));
+    lookZ = eyeZ+radius*(sin(anglePitch*3.1416/180.0));
 }
 
 void CALLBACK errorCallback(GLenum errorCode)
@@ -244,7 +244,7 @@ static void getNormal3p
 //    glLightfv( GL_LIGHT1, GL_POSITION, light_position2);
 //}
 
-void light(double x,double y,double z,bool lighton,GLenum Lights,bool spot,bool strip)
+void light(double x,double y,double z,bool lighton,GLenum Lights,bool spot,bool strip,double sp)
 {
     GLfloat no_light[] = { 0.0, 0.0, 0.0, 1.0 };
     GLfloat light_ambient[]  = {0.3, 0.3, 0.3, 1.0};
@@ -295,7 +295,7 @@ void light(double x,double y,double z,bool lighton,GLenum Lights,bool spot,bool 
     {
         GLfloat spot_direction[] = { 50.0, -200.0, 0.0 };
         glLightfv(Lights, GL_SPOT_DIRECTION, spot_direction);
-        glLightf(Lights, GL_SPOT_CUTOFF, 15.0);
+        glLightf(Lights, GL_SPOT_CUTOFF, sp);
     }
 
 
@@ -1357,16 +1357,894 @@ void draw_knob(GLfloat r,GLfloat g,GLfloat b)
 
 }
 
+void drawbowl(GLfloat r,GLfloat g,GLfloat b)
+{
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+    drawcylinder(r,g,b,false,1.8,0.8,1.2);
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+    glTranslatef(0.000000, 0.000000, 1.200000);
+    drawdisk(r,g,b,false,.002,.8);
+
+    glPopMatrix();
+}
+
+void drawfridge(GLfloat r,GLfloat g,GLfloat b)
+{
+
+    glPushMatrix();
+
+    glTranslatef(0,13.500015,0);
+
+
+    //sides
+    glPushMatrix();
+    glScalef(.3,12,2);
+//    glTranslatef(tx,ty,tz);
+    drawcube2(r,g,b);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(.3,12,2);
+    glTranslatef(-74.599434, 0.000000, 0.000000);
+    drawcube2(r,g,b);
+    glPopMatrix();
+
+
+    //sides
+
+    //top bottom
+
+    glPushMatrix();
+    glScalef(5.5,.3,2);
+    glTranslatef(-3.899998,0,0);
+    drawcube2(1,1,1);
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glScalef(5.5,.3,2);
+    glTranslatef(-3.899998,31.200083,0);
+    drawcube2(1,1,1);
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glScalef(5.5,.3,2);
+    glTranslatef(-3.899998,62.200083,0);
+    drawcube2(1,1,1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(5.5,.3,2);
+    glTranslatef(-3.899998,92.200083,0);
+    drawcube2(1,1,1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(5.5,.3,2);
+    glTranslatef(-3.899998,122.200083,0);
+    drawcube2(1,1,1);
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glScalef(5.5,.3,2);
+    glTranslatef(-3.899998,156.100327,0);
+    drawcube2(1,1,1);
+    glPopMatrix();
+
+
+    //top bottom
+
+
+    //back
+
+    glPushMatrix();
+    glScalef(5.5,12,.3);
+    glTranslatef(-3.899998, 0.000000, 0.000000);
+    drawcube2(.5,.5,.5);
+    glPopMatrix();
+
+    //back
+
+
+    //front
+
+    glPushMatrix();
+//    glRotatef( falpha, axis_x, axis_y, axis_z );
+
+//    glRotatef( 90, 0, 1, 0 );
+glTranslatef(2.2,0,-0.600000);
+glTranslatef(-2.5,0,2);
+glRotatef( fAng, 0, 1, 0 );
+    glScalef(5.5,12,.3);
+    glTranslatef(-3.899998, 0, 23.400053);
+//    glRotatef( -45, 0, 1, 0 );
+    drawcube2(.5,.5,.5);
+    glPopMatrix();
+
+    //front
+
+
+    //objects inside
+
+
+    glPushMatrix();
+    glTranslatef(-2.400000, 21.100044, 3.199999);
+    drawbowl(.3,.4,.5);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-2.400000, 21.100044, 6.599996);
+    drawbowl(.5,.3,.4);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-6.099997, 21.100044, 3.199999);
+    drawbowl(.6,.8,1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-6.099997, 21.100044, 6.599996);
+    drawbowl(.9,.8,.1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-9.699997, 21.100044, 3.199999);
+    drawbowl(1,1,0);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-9.699997, 21.100044, 6.599996);
+    drawbowl(0,0,1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-13.299997, 21.100044, 3.199999);
+    drawbowl(.4,.5,3);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-13.299997, 21.100044, 6.599996);
+    drawbowl(.9,1,1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-16.499997, 21.100044, 3.199999);
+    drawbowl(1,.01,.01);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-16.499997, 21.100044, 6.599996);
+    drawbowl(.9,.8,0);
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+    glTranslatef(-2.999999, 5.999997, -2.200000);
+    drawbottle(.6,.8,1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+    glTranslatef(-6.999996, 5.999997, -2.200000);
+    drawbottle(.5,.3,.4);
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+    glTranslatef(-10.999996, 5.999997, -2.200000);
+    drawbottle(.3,.4,.5);
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+    glTranslatef(-14.999996, 5.999997, -2.200000);
+    drawbottle(.8,.4,.5);
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+    glTranslatef(-18.999996, 5.999997, -2.200000);
+    drawbottle(.9,.9,.5);
+    glPopMatrix();
+
+
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+    glTranslatef(-10.999996, 5.999997, -29.800077);
+    drawbottle(.3,.4,.5);
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+    glTranslatef(-14.999996, 5.999997, -29.800077);
+    drawbottle(.8,.4,.5);
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+    glTranslatef(-18.999996, 5.999997, -29.800077);
+    drawbottle(.9,.9,.5);
+    glPopMatrix();
+
+
+
+    glPushMatrix();
+    glTranslatef(-2.400000, 30.100079, 3.199999);
+    drawbowl(.3,.4,.5);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-2.400000, 30.100079, 6.599996);
+    drawbowl(.5,.3,.4);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-6.099997, 30.100079, 3.199999);
+    drawbowl(.6,.8,1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-6.099997, 30.100079, 6.599996);
+    drawbowl(.9,.8,.1);
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glTranslatef(-2.400000, 39.099976, 3.199999);
+    drawbowl(.3,.4,.5);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-2.400000, 39.099976, 6.599996);
+    drawbowl(.5,.3,.4);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-6.099997, 39.099976, 3.199999);
+    drawbowl(.6,.8,1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-6.099997, 39.099976, 6.599996);
+    drawbowl(.9,.8,.1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+    glScalef(.7,.7,.7);
+    glTranslatef(-2.799999, 9.700001, -16.800028);
+    drawjar(.5,.3,.4);
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+    glScalef(.7,.7,.7);
+    glTranslatef(-10.700005, 9.700001, -16.800028);
+    drawjar(.6,.8,1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+    glScalef(.7,.7,.7);
+    glTranslatef(-17.700005, 9.700001, -16.800028);
+    drawjar(.7,.7,.7);
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+    glScalef(.7,.7,.7);
+    glTranslatef(-24.700005, 9.700001, -16.800028);
+    drawjar(.5,.3,4);
+    glPopMatrix();
+
+
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+    glScalef(.7,.7,.7);
+    glTranslatef(-17.700005, 9.700001, -55.899719);
+    drawjar(.7,.7,.7);
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+    glScalef(.7,.7,.7);
+    glTranslatef(-24.700005, 9.700001, -55.899719);
+    drawjar(.5,.3,4);
+    glPopMatrix();
 
 
 
 
+
+
+
+    //objects inside
+
+
+    //light
+    glPushMatrix();
+    glScalef(3,.2,.1);
+    glTranslatef(-5.299997, 118.498764, 8.299995);
+    drawcube2(1,1,1);
+    glPopMatrix();
+
+    glPushMatrix();
+
+    light(-33.900055, 121.898712, 0.000000,lgt3,GL_LIGHT3,true,false,5.0);
+//    light(tx,ty,tz)
+
+    glPopMatrix();
+
+    //light
+
+
+
+    glPopMatrix();
+}
+
+void drawpot(GLfloat r,GLfloat g,GLfloat b)
+{
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+    drawcylinder(r,g,b,false,1.8,.8,1.8);
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+//    drawcylinder(r,g,b,false,1.8,.8,1.8);
+glTranslatef(0,0,1.800000);
+    drawdisk(r,g,b,false,.0002,.8);
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(-90,0,1,0);
+    glTranslatef(0.000000, -0.600000, 0.500000);
+    drawcylinder(r,g,b,false,.3,.3,2.5);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(.4,.1,.1);
+    glTranslatef(2.799999, -5.499997, 0.000000);
+
+    drawcube2(r,g,b);
+
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(.4,.1,.1);
+    glTranslatef(2.799999, -11.800009, 0.000000);
+
+    drawcube2(r,g,b);
+
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glScalef(.1,.2,.1);
+    glTranslatef(22.800051, -4.599998, 0.000000);
+
+    drawcube2(r,g,b);
+
+    glPopMatrix();
+
+}
+
+void drawtap(GLfloat r,GLfloat g,GLfloat b)
+{
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glBindTexture(GL_TEXTURE_2D, 15);
+    glScalef(.2,1.3,.09);
+    drawcube2(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
+
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glBindTexture(GL_TEXTURE_2D, 15);
+    glTranslatef(0.000000, 4.899998, 0.000000);
+    glScalef(.2,.09,.4);
+    drawcube2(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glBindTexture(GL_TEXTURE_2D, 15);
+    glTranslatef(0.800000, 2.400000, 0.000000);
+    glScalef(.2,.2,.2);
+    drawcube2(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+}
+
+
+void drawtissue()
+{
+
+    glPushMatrix();
+//    glRotatef(90,1,0,0);
+    drawcylinder(1,1,1,false,2,2,2.7);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(0.000000, 0.000000, 2.700000);
+    drawdisk(1,1,1,false,.8,2);
+    glPopMatrix();
+
+    glPushMatrix();
+//    glTranslatef(0.000000, 0.000000, 0);
+    drawdisk(1,1,1,false,.8,2);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(0.000000, 0.000000,-0.200000);
+//    glTranslatef(tx,ty,tz);
+    drawcylinder(.54,0,.003,false,.8,.8,3.5);
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glScalef(1.5,.2,.15);
+    glTranslatef(0.400000, 0.000000, 18.800035);
+    drawcube2(.54,0,.003);
+    glPopMatrix();
+
+
+
+    glPushMatrix();
+    glScalef(1.5,.2,.15);
+    glTranslatef(0.000000, 0.000000, -3.999998);
+    drawcube2(.54,0,.003);
+    glPopMatrix();
+}
 
 void spinDisplay_right1(void)
 {
    spin = -.60;
     glutPostRedisplay();
    glRotatef(spin, 0.0, 0.0, 1.0);
+}
+
+void bird_view()
+{
+//     init(6);
+//     f=6;
+    bv = 1-bv;
+    b_swap();
+
+}
+
+
+
+
+
+
+void sphere(double rd, GLfloat r,GLfloat g,GLfloat b)
+{
+
+    GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_ambient[] = { r, g, b, 1.0 };
+    GLfloat mat_diffuse[] = { r, g, b, 1.0 };
+    GLfloat mat_specular[] = { 0.0, 0.3, 0.3, 1.0 };
+    GLfloat mat_shininess[] = {60};
+
+    glMaterialfv( GL_FRONT, GL_AMBIENT, mat_ambient);
+    glMaterialfv( GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv( GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialfv( GL_FRONT, GL_SHININESS, mat_shininess);
+
+    glutSolidSphere (rd, 20, 16);
+}
+
+
+void waterscene(GLfloat r,GLfloat g,GLfloat b)
+{
+
+    if(wt1)
+    {PM;
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0,-.4,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0,-.8,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0,-1.2,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0.4,-.8,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0.4,-1.2,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0.4,-1.6,0);
+    sphere(.2,r,g,b);
+    PP;
+    }
+}
+
+
+void waterscene2(GLfloat r,GLfloat g,GLfloat b)
+{
+    if(wt2)
+    {PM;
+    glTranslatef(0,-1.6,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0,-2.0,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0,-2.4,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0,-2.8,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0.4,-2.4,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0.4,-2.8,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0.4,-3.2,0);
+    sphere(.2,r,g,b);
+    PP;}
+}
+
+
+
+void waterscene3(GLfloat r,GLfloat g,GLfloat b)
+{
+
+    if(wt3)
+    {PM;
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0,-.4,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0,-.8,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0,-1.2,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0.4,-.8,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0.4,-1.2,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0.4,-1.6,0);
+    sphere(.2,r,g,b);
+    PP;
+    }
+}
+
+
+void waterscene4(GLfloat r,GLfloat g,GLfloat b)
+{
+    if(wt4)
+    {PM;
+    glTranslatef(0,-1.6,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0,-2.0,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0,-2.4,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0,-2.8,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0.4,-2.4,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0.4,-2.8,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0.4,-3.2,0);
+    sphere(.2,r,g,b);
+    PP;}
+}
+
+
+
+void waterscene5(GLfloat r,GLfloat g,GLfloat b)
+{
+
+    if(wt5)
+    {PM;
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0,-.4,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0,-.8,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0,-1.2,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0.4,-.8,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0.4,-1.2,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0.4,-1.6,0);
+    sphere(.2,r,g,b);
+    PP;
+    }
+}
+
+
+void waterscene6(GLfloat r,GLfloat g,GLfloat b)
+{
+    if(wt6)
+    {PM;
+    glTranslatef(0,-1.6,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0,-2.0,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0,-2.4,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0,-2.8,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0.4,-2.4,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0.4,-2.8,0);
+    sphere(.2,r,g,b);
+    PP;
+
+    PM;
+    glTranslatef(0.4,-3.2,0);
+    sphere(.2,r,g,b);
+    PP;}
+}
+
+
+
+void drawcoffeemachine()
+{
+    PM;
+    glTranslatef(-6.499996, -6.899996, 0.000000);
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glBindTexture(GL_TEXTURE_2D,21);
+    glScalef(3,4,1);
+    drawcube2(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
+    GT;
+    PM;
+
+    glScalef(3,4,1);
+    glTranslatef(0.000000, -5.699997, 0.000000);
+    glBindTexture(GL_TEXTURE_2D,22);
+
+    drawcube2(1,1,1);
+    PP;
+    GD;
+
+    GT;
+    PM;
+
+    glScalef(3,4,.3);
+    glTranslatef(0.000000, -2.899999, 0.000000);
+    glBindTexture(GL_TEXTURE_2D,15);
+    drawcube2(1,1,1);
+
+    PP;
+    GD;
+
+    PM;
+    glScalef(.5,.5,.5);
+    glTranslatef(11.600008, -10.800005, 5.399997);
+    drawcup(.5,.3,.4);
+    PP;
+
+
+    GT;
+    PM;
+    glScalef(1,9,1);
+    glBindTexture(GL_TEXTURE_2D,23);
+    glTranslatef(11.600008, -2.400000, 0.000000);
+    drawcube2(1,1,1);
+    PP;
+    GD;
+
+    PP;
+
+
+
+    PM;
+
+
+    glTranslatef(-1.100000, -8.099995, 2.700000);
+
+
+
+    waterscene5(.435,.305,.215);
+
+
+        waterscene6(.435,.305,.215);
+
+
+
+    if(!wtr3){
+        wt5=wt6=false;
+    }
+    PP;
+}
+
+
+void drawoven()
+{
+
+    GT;
+    PM;
+    glRotatef(ovAng,1,0,0);
+    glScalef(3,4,.3);
+    glBindTexture(GL_TEXTURE_2D,11);
+    drawcube2(1,1,1);
+    PP;
+    GD;
+
+    GT;
+    PM;
+    glScalef(.3,4,1.5);
+    glTranslatef(0.000000, 0.000000, -3.399999);
+    glBindTexture(GL_TEXTURE_2D,15);
+    drawcube2(1,1,1);
+    PP;
+    GD;
+
+
+    GT;
+    PM;
+    glScalef(.3,4,1.5);
+    glTranslatef(35.700027, 0.000000, -3.399999);
+    glBindTexture(GL_TEXTURE_2D,15);
+    drawcube2(1,1,1);
+    PP;
+    GD;
+
+
+    GT;
+    PM;
+//    glRotatef(ovAng,1,0,0);
+    glScalef(3,4,.3);
+    glTranslatef(0,0,-16.800028);
+    glBindTexture(GL_TEXTURE_2D,15);
+    drawcube2(1,1,1);
+    PP;
+    GD;
+
+
+    GT;
+    PM;
+
+    glScalef(3,.3,1.5);
+    glTranslatef(0,50.199806, -3.399999);
+    glBindTexture(GL_TEXTURE_2D,12);
+    drawcube2(1,1,1);
+    PP;
+    GD;
+
+    GT;
+    PM;
+
+    glScalef(3,.3,1.5);
+    glTranslatef(0,0, -3.399999);
+    glBindTexture(GL_TEXTURE_2D,15);
+    drawcube2(1,1,1);
+    PP;
+    GD;
+
+
+    GT;
+    PM;
+
+    glScalef(3,.3,1.5);
+    glTranslatef(0,25, -3.399999);
+    glBindTexture(GL_TEXTURE_2D,15);
+    drawcube2(1,1,1);
+    PP;
+    GD;
 }
 
 
@@ -1387,6 +2265,167 @@ void display(void)
 
 //    glRotatef( alpha,axis_x, axis_y, 0.0 );
     glRotatef( theta, axis_x, axis_y, 0.0 );
+
+
+    //stove
+    PM;
+    glScalef(2.5,1.5,.8);
+    glTranslatef(-55.499725, -19.500038, 0.000000);
+    drawoven();
+    PP;
+    //stove
+
+    //
+
+
+    //cfm
+
+    glPushMatrix();
+
+    glTranslatef(-69.199516, 0.000000, 20.000040);
+
+    drawcoffeemachine();
+
+    glPopMatrix();
+
+
+    //cfm
+
+
+    //waterscene
+     PM;
+     glTranslatef(-91.199181, 1.300000, -6.599996);
+
+        waterscene(.001,.001,.5);
+
+
+        waterscene2(.001,.001,.5);
+
+
+
+    if(!wtr){
+        wt1=wt2=false;
+    }
+    PP;
+
+    PM;
+
+    glTranslatef(18.900036, 15.300022, -16.100025);
+
+    waterscene3(.001,.001,.5);
+
+
+        waterscene4(.001,.001,.5);
+
+
+
+    if(!wtr2){
+        wt3=wt4=false;
+    }
+
+
+
+
+
+
+
+    PP;
+
+    //waterscene
+
+
+    //fridge
+
+    glPushMatrix();
+
+    glRotatef(90,0,1,0);
+    glScalef(.4,1,1);
+    glTranslatef(-24.500055, -42.799919, -139.099289);
+    drawfridge(1,1,1);
+glPopMatrix();
+    //fridge
+
+//    drawpot(.5,.5,.5);
+
+
+    //bathroom
+    glPushMatrix();
+    glTranslatef(15.700024, 12.300011, -16.400026);
+    drawpot(.8,0,.002);
+    glPopMatrix();
+
+    glPushMatrix();
+
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(-90,0,1,0);
+    glTranslatef(-16.200026, 12.200010, -20.000040);
+    drawtap(.5,.5,.5);
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glTranslatef(13.400015, 17.100029, -20.300041);
+    drawtissue();
+    glPopMatrix();
+
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glBindTexture(GL_TEXTURE_2D,20);
+
+    glScalef(3,.1,1.5);
+    glTranslatef(-0.300000, 102.899002, -14.400019);
+    drawcube2(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
+
+
+    //backwall
+    glPushMatrix();
+    glScalef(6,7,.2);
+    glTranslatef(-0.700000, 1.400000, -115.598808);
+    drawcube2(.5,.5,.5);
+    glPopMatrix();
+    //backwall
+
+
+    //frontwall
+    glPushMatrix();
+    glScalef(2.7,7,.2);
+    glTranslatef(-1.300000, 1.400000,  -43.699905);
+    drawcube2(.5,.5,.5);
+    glPopMatrix();
+    //frontwall
+
+
+    //sidewall
+
+    glPushMatrix();
+    glScalef(.2,7,3.7);
+    glTranslatef(-17.800032, 1.400000,  -6.299996);
+    drawcube2(.5,.5,.5);
+    glPopMatrix();
+
+    //sidewall
+
+
+    //door
+
+    glPushMatrix();
+    glScalef(3.3,7,.2);
+    glTranslatef(wdx, 1.400000,  -43.699905);
+    drawcube2(.5,.5,.5);
+    glPopMatrix();
+
+    //door
+
+
+
+
+
+    //bathroom
 
 
     glPushMatrix();
@@ -1715,36 +2754,36 @@ glRotatef( alpha,axis_x, axis_y, 0.0 );
 
 //    kitchen scene
 
-    //stove
-    glDisable(GL_TEXTURE_2D);
-    glPushMatrix();
-    glScalef(8,6,2);
-    glTranslatef(-17.400030, -4.899998, -4.699998);
+//    //stove
+//    glDisable(GL_TEXTURE_2D);
+//    glPushMatrix();
+//    glScalef(8,6,2);
+//    glTranslatef(-17.400030, -4.899998, -4.699998);
+////    glBindTexture(GL_TEXTURE_2D, 11);
+//    drawcube2(1,1,1);
+//    glPopMatrix();
+//    glDisable(GL_TEXTURE_2D);
+//
+//    glEnable(GL_TEXTURE_2D);
+//    glPushMatrix();
+//    glScalef(8,6,.2);
+//    glTranslatef(-17.400030, -4.899998, -4.699998);
 //    glBindTexture(GL_TEXTURE_2D, 11);
-    drawcube2(1,1,1);
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-
-    glEnable(GL_TEXTURE_2D);
-    glPushMatrix();
-    glScalef(8,6,.2);
-    glTranslatef(-17.400030, -4.899998, -4.699998);
-    glBindTexture(GL_TEXTURE_2D, 11);
-    drawcube2(1,1,1);
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-
-
-    glEnable(GL_TEXTURE_2D);
-    glPushMatrix();
-    glScalef(8,2,2);
-    glTranslatef(-17.400030, -6.099998, -4.699998);
-    glBindTexture(GL_TEXTURE_2D, 12);
-    drawcube2(1,1,1);
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-
-//stove
+//    drawcube2(1,1,1);
+//    glPopMatrix();
+//    glDisable(GL_TEXTURE_2D);
+//
+//
+//    glEnable(GL_TEXTURE_2D);
+//    glPushMatrix();
+//    glScalef(8,2,2);
+//    glTranslatef(-17.400030, -6.099998, -4.699998);
+//    glBindTexture(GL_TEXTURE_2D, 12);
+//    drawcube2(1,1,1);
+//    glPopMatrix();
+//    glDisable(GL_TEXTURE_2D);
+//
+////stove
 
 
 //sink
@@ -1829,6 +2868,7 @@ glDisable(GL_TEXTURE_2D);
 //glRotatef(90,1,0,0);
 //drawbottle(.5,.5,.5);
 //drawdisk();
+//drawbowl(.5,.3,.4);
 
     glPopMatrix();
 
@@ -2126,14 +3166,14 @@ glDisable(GL_TEXTURE_2D);
 //    light1();
 //    \\0.0, 50.0, 20.0, 1.0
 
-    light(0.0, 50.0, 20.0,lgt0,GL_LIGHT0,false,false);
+    light(0.0, 50.0, 20.0,lgt0,GL_LIGHT0,false,false,15);
 
 //    \\0.0, 50.0, -30.0
 
 
-    light(-18.500034, 37.699997, 18.700035,lgt1,GL_LIGHT1,true,false);
+    light(-18.500034, 37.699997, 18.700035,lgt1,GL_LIGHT1,true,false,15);
 
-    light(-18.500034, 37.699997, 0,lgt2,GL_LIGHT2,true,false);
+    light(-18.500034, 37.699997, 0,lgt2,GL_LIGHT2,true,false,15);
 
 
 //    light(-42.699921, 18.100031, 18.600035,lgt3,GL_LIGHT3,true,false);
@@ -2154,8 +3194,7 @@ void myKeyboardFunc( unsigned char key, int x, int y )
     GLfloat light_position[] = { 0.0, 50.0, 20.0, 1.0 };
     switch ( key )
     {
-    case 'R':
-    case 'r':
+    case 'e':
         bRotate = !bRotate;
         axis_x=0.0;
         axis_y=1.0;
@@ -2172,6 +3211,64 @@ void myKeyboardFunc( unsigned char key, int x, int y )
         fRotate = !fRotate;
         axis_x=0.0;
         axis_y=1.0;
+        break;
+    case 'r':
+
+        anglePitch += roll_value;
+
+
+        setCameraEye_Pitch();
+        glutPostRedisplay();
+
+        break;
+    case 't':
+
+        anglePitch -= roll_value;
+
+        setCameraEye_Pitch();
+        glutPostRedisplay();
+        break;
+    case 'y':
+
+        angleYaw += roll_value;
+
+        setCameraEye_Yaw();
+
+        glutPostRedisplay();
+
+        break;
+    case 'u':
+        angleYaw -= roll_value;
+        setCameraEye_Yaw();
+        glutPostRedisplay();
+        break;
+    case 'c':
+        bird_view();
+        glutPostRedisplay();
+        break;
+
+
+
+
+
+    case 'D':
+
+        if(wdx>0.1)
+        {
+            wdx-=.1;
+        }
+
+        break;
+
+    case 'G':
+
+        if(wdx<2.0)
+        {
+
+
+            wdx+=.1;
+//            printf("AISWE");
+        }
         break;
 
 
@@ -2208,6 +3305,10 @@ void myKeyboardFunc( unsigned char key, int x, int y )
     case 'm':
         lgt0 = !lgt0;
         glutPostRedisplay();
+
+    case 'M':
+        lgt3 = !lgt3;
+        glutPostRedisplay();
     case 'n':
         lgt1 = !lgt1;
         glutPostRedisplay();
@@ -2222,135 +3323,26 @@ void myKeyboardFunc( unsigned char key, int x, int y )
         glutPostRedisplay();
         break;
 
-    case '1':
-//        printf("X");
-        if(l1==1)
-        {
+    case 'z':
 
-            if(aa==1)
-            {
-
-                aa=0;
-                glLightfv( GL_LIGHT0, GL_AMBIENT, no_light);
-
-            }
-            else
-            {
-
-                aa=1;
-                glLightfv( GL_LIGHT0, GL_AMBIENT, light_ambient);
-            }
-        }
-
-        break;
-    case '2':
-//        printf("X");
-        if(l1==1)
-        {
-
-            if(ad==1)
-            {
-
-                ad=0;
-                glLightfv( GL_LIGHT0, GL_DIFFUSE, no_light);
-
-            }
-            else
-            {
-
-                ad=1;
-                glLightfv( GL_LIGHT0, GL_DIFFUSE, light_diffuse);
-            }
-        }
-
+        wtr = !wtr;
+        glutPostRedisplay();
         break;
 
-    case '3':
-//        printf("X");
-        if(l1==1)
-        {
+    case 'x':
 
-            if(as==1)
-            {
-
-                as=0;
-                glLightfv( GL_LIGHT0, GL_SPECULAR, no_light);
-
-            }
-            else
-            {
-
-                as=1;
-                glLightfv( GL_LIGHT0, GL_SPECULAR, light_specular);
-            }
-        }
-
+        wtr2 = !wtr2;
+        glutPostRedisplay();
         break;
 
-    case '4':
-//        printf("X");
-        if(l2==1)
-        {
 
-            if(ba==1)
-            {
+    case 'C':
 
-                ba=0;
-                glLightfv( GL_LIGHT1, GL_AMBIENT, no_light);
-
-            }
-            else
-            {
-
-                ba=1;
-                glLightfv( GL_LIGHT1, GL_AMBIENT, light_ambient);
-            }
-        }
-
-        break;
-    case '5':
-//        printf("X");
-        if(l2==1)
-        {
-
-            if(bd==1)
-            {
-
-                bd=0;
-                glLightfv( GL_LIGHT1, GL_DIFFUSE, no_light);
-
-            }
-            else
-            {
-
-                bd=1;
-                glLightfv( GL_LIGHT1, GL_DIFFUSE, light_diffuse);
-            }
-        }
-
+        wtr3 = !wtr3;
+        glutPostRedisplay();
         break;
 
-    case '6':
-//        printf("X");
-        if(l2==1)
-        {
 
-            if(bs==1)
-            {
-
-                bs=0;
-                glLightfv( GL_LIGHT1, GL_SPECULAR, no_light);
-
-            }
-            else
-            {
-
-                bs=1;
-                glLightfv( GL_LIGHT1, GL_SPECULAR, light_specular);
-            }
-        }
-
-        break;
 
     case 'i':
         //if(angleRoll>=angleRollLimit1)
@@ -2401,6 +3393,25 @@ void myKeyboardFunc( unsigned char key, int x, int y )
         printf("%lf %lf %lf\n",tx,ty,tz);
         break;
 
+    case 'Z':
+        if(fAng>0)
+            fAng-=1;
+        break;
+    case 'X':
+        if(fAng<45)
+            fAng+=1;
+        break;
+
+
+    case 'Q':
+        if(ovAng>0)
+            ovAng-=1;
+        break;
+    case 'q':
+        if(ovAng<40)
+            ovAng+=1;
+        break;
+
 
 
 
@@ -2441,6 +3452,98 @@ void animate()
             alpha2 -= 360.0*floor(alpha2/360.0);
     }
 
+    if(wtr==true)
+    {
+
+        auto end_ = std::chrono::system_clock::now();
+
+        std::chrono::duration<double> elapsed_seconds = end_-start;
+        //std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+
+        double t= elapsed_seconds.count()*1000;
+
+        int tt = (int)(t/200);
+
+        if(tt%2==0)
+        {
+
+            wt1=true;
+            wt2=false;
+
+        }
+
+        else
+        {
+
+            wt1=false;
+            wt2=true;
+
+        }
+
+    }
+
+
+    if(wtr2==true)
+    {
+
+        auto end_ = std::chrono::system_clock::now();
+
+        std::chrono::duration<double> elapsed_seconds = end_-start;
+        //std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+
+        double t= elapsed_seconds.count()*1000;
+
+        int tt = (int)(t/200);
+
+        if(tt%2==0)
+        {
+
+            wt3=true;
+            wt4=false;
+
+        }
+
+        else
+        {
+
+            wt3=false;
+            wt4=true;
+
+        }
+
+    }
+
+
+    if(wtr3==true)
+    {
+
+        auto end_ = std::chrono::system_clock::now();
+
+        std::chrono::duration<double> elapsed_seconds = end_-start;
+        //std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+
+        double t= elapsed_seconds.count()*1000;
+
+        int tt = (int)(t/200);
+
+        if(tt%2==0)
+        {
+
+            wt5=true;
+            wt6=false;
+
+        }
+
+        else
+        {
+
+            wt5=false;
+            wt6=true;
+
+        }
+
+    }
+
 
 
 
@@ -2456,7 +3559,7 @@ void animate()
 
 int main (int argc, char **argv)
 {
-    printf("%lf %lf %lf\n",tx,ty,tz);
+    printf("%lf %lf %lf %lf\n",tx,ty,tz,wdx);
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 
@@ -2486,6 +3589,10 @@ int main (int argc, char **argv)
     LoadTexture2("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\shf.bmp");///17
     LoadTexture2("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\tp2.bmp");///18
     LoadTexture2("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\tp3.bmp");///19
+    LoadTexture2("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\cmd.bmp");///20
+    LoadTexture2("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\cm1.bmp");///21
+    LoadTexture2("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\cm2.bmp");///22
+    LoadTexture2("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\cm3.bmp");///23
 //    light1();
     glutKeyboardFunc(myKeyboardFunc);
     glutDisplayFunc(display);
