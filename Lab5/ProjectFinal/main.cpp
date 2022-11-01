@@ -30,8 +30,8 @@ double centerz = 0;
 unsigned int ID,ID1;
 double Txval=0,Tyval=0,Tzval=0;
 double windowHeight=700, windowWidth=700;
-GLfloat fAng=0, ovAng=0,alpha = 0.0, alpha2=0.0, falpha=0.0,xx=-4.499998,yy=-4.499998+.2,theta = 0.0, axis_x=0.0, axis_y=0.0,axis_z=0.0,px=10.100002,py=26.700066,pz=-4.499998,tx=0,ty=0,tz=0,wdx=2.0,wcm1=2.0,wcm2=0.0;
-GLboolean wt1=false,wt2=false,wt3=false,wt4=false,wt5=false,wt6=false,wtr=false,wtr2=false,wtr3=false,bRotate = false, fdRotate=false ,uRotate = false,lgt0 = true,lgt1=true,lgt2=true,lgt3=true,fRotate= false, cRotate= true,vRotate=false,wdf=true,wdr=false;
+GLfloat cpz=5.399997, bk=5.399997,jz=-1.000000,btx=-7.000000,bty=5.399997,btz=-2.000000,sAng=0 ,fAng=0, ovAng=0,alpha = 0.0, alpha2=0.0, falpha=0.0,xx=-4.499998,yy=-4.499998+.2,theta = 0.0, axis_x=0.0, axis_y=0.0,axis_z=0.0,px=10.100002,py=26.700066,pz=-4.499998,tx=0,ty=0,tz=0,wdx=2.0,wcm1=2.0,wcm2=0.0;
+GLboolean  wt1=false,wt2=false,wt3=false,wt4=false,wt5=false,wt6=false,wtr=false,wtr2=false,wtr3=false,bRotate = false, fdRotate=false ,uRotate = false,lgt0 = true,lgt1=true,lgt2=true,lgt3=true,lgt4=true,srotate=false,fRotate= false, cRotate= true,vRotate=false,wdf=true,wdr=false;
 static GLfloat spin = 0.0;
 int cnt=0;
 
@@ -40,11 +40,11 @@ int l1=1, l2=1,aa=1,ad=1,as=1,ba=1,bd=1,bs=1;
 GLuint startList;
 
 GLfloat eyeX = 2-15-15+2-20+38-43;
-GLfloat eyeY = 3+15;
+GLfloat eyeY = 3+15+40;
 GLfloat eyeZ = 10+30+2+6+3+17+40;
 double radius = eyeZ;
 GLfloat lookX = 2-15-15+2-20+38-43;
-GLfloat lookY = 3+15;
+GLfloat lookY = 3+15+40;
 GLfloat lookZ = 0+30+2+6+3+17;
 
 GLfloat upX = 0;
@@ -1464,6 +1464,7 @@ void drawfridge(GLfloat r,GLfloat g,GLfloat b)
 
 
     //front
+    GT;
 
     glPushMatrix();
 //    glRotatef( falpha, axis_x, axis_y, axis_z );
@@ -1475,8 +1476,10 @@ glRotatef( fAng, 0, 1, 0 );
     glScalef(5.5,12,.3);
     glTranslatef(-3.899998, 0, 23.400053);
 //    glRotatef( -45, 0, 1, 0 );
+    glBindTexture(GL_TEXTURE_2D,28);
     drawcube2(.5,.5,.5);
     glPopMatrix();
+    GD;
 
     //front
 
@@ -1543,7 +1546,7 @@ glRotatef( fAng, 0, 1, 0 );
 
     glPushMatrix();
     glRotatef(90,1,0,0);
-    glTranslatef(-6.999996, 5.999997, -2.200000);
+    glTranslatef(btx,bty,btz);
     drawbottle(.5,.3,.4);
     glPopMatrix();
 
@@ -2143,7 +2146,7 @@ void drawcoffeemachine()
 
     PM;
     glScalef(.5,.5,.5);
-    glTranslatef(11.600008, -10.800005, 5.399997);
+    glTranslatef(11.600008, -10.800005, cpz);
     drawcup(.5,.3,.4);
     PP;
 
@@ -2277,6 +2280,96 @@ void drawoven()
 }
 
 
+void sphered(GLfloat r,GLfloat g,GLfloat b,GLboolean emission=false)
+{
+    GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_ambient[] = { r, g, b, 1.0 };
+    GLfloat mat_diffuse[] = { r, g, b, 1.0 };
+    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat mat_shininess[] = {60};
+
+    GLfloat mat_em[] = {1.0,1.0,1.0,1.0};
+
+    glMaterialfv( GL_FRONT, GL_AMBIENT, mat_ambient);
+    glMaterialfv( GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv( GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialfv( GL_FRONT, GL_SHININESS, mat_shininess);
+    if(emission) glMaterialfv( GL_FRONT, GL_EMISSION, mat_em);
+    else glMaterialfv( GL_FRONT, GL_EMISSION, no_mat);
+
+    GLUquadric* qobj;
+    qobj = gluNewQuadric();
+    gluQuadricTexture(qobj,1);
+    gluSphere(qobj,10,25,25);
+    light(-17.000000, 24.400057, 0.000000,lgt4,GL_LIGHT4,true,false,80);
+}
+
+
+void spherem(GLfloat r,GLfloat g,GLfloat b,GLboolean emission=false)
+{
+    GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_ambient[] = { r, g, b, 1.0 };
+    GLfloat mat_diffuse[] = { r, g, b, 1.0 };
+    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat mat_shininess[] = {60};
+
+    GLfloat mat_em[] = {1.0,1.0,1.0,1.0};
+
+    glMaterialfv( GL_FRONT, GL_AMBIENT, mat_ambient);
+    glMaterialfv( GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv( GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialfv( GL_FRONT, GL_SHININESS, mat_shininess);
+    if(emission) glMaterialfv( GL_FRONT, GL_EMISSION, mat_em);
+    else glMaterialfv( GL_FRONT, GL_EMISSION, no_mat);
+
+    GLUquadric* qobj;
+    qobj = gluNewQuadric();
+    gluQuadricTexture(qobj,1);
+    gluSphere(qobj,10,25,25);
+//    light(-17.000000, 24.400057, 0.000000,lgt4,GL_LIGHT4,true,false,80);
+}
+
+
+void drawjars(GLfloat r, GLfloat g, GLfloat b)
+{
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+    drawcylinder(r,g,b,false,2,2);
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+//    glTranslatef(tx,ty,tz);
+    drawdisk(r,g,b,false,.002,2);
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+    glTranslatef(0.000000, 0.000000, -1.100000);
+    drawcylinder(g,b,r,false,1.7,1.7);
+    glPopMatrix();
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+    glTranslatef(0.000000, 0.000000, 4.999997);
+    drawdisk(r,g,b,false,.002,2);
+    glPopMatrix();
+    glPushMatrix();
+    glRotatef(90,1,0,0);
+    glTranslatef(0.000000, 0.000000, jz);
+    drawdisk(g,b,r,false,.002,1.7);
+    glPopMatrix();
+
+    GT;
+    PM;
+    glBindTexture(GL_TEXTURE_2D,29);
+    glScalef(.3,.1,.17);
+    glTranslatef(-2.000000,bk,0);
+    drawcube2(1,1,1);
+    PP;
+    GD;
+}
+
 
 void display(void)
 {
@@ -2289,6 +2382,73 @@ void display(void)
     glMatrixMode( GL_MODELVIEW );
     glLoadIdentity();
     gluLookAt(eyeX,eyeY,eyeZ, lookX,lookY,lookZ, upX,upY,upZ);
+
+
+
+
+
+    //////////////////WORLD
+
+    ///////////////////////////
+    ///////////////////////////
+
+    GT;
+    PM;
+    glTranslatef(-186.000000,-34.000053,-116.000000);
+    glScalef(70,1,110);
+    glBindTexture(GL_TEXTURE_2D, 25); // 1
+    drawcube2(1,1,1);
+    PP;
+    GD;
+
+
+    GT;
+    PM;
+    glBindTexture(GL_TEXTURE_2D,26);
+    glRotatef(sAng,0,0,1);
+    glTranslatef(-63.000000, 229.798721, 0.000000);
+    sphered(1,1,1);
+    PP;
+    GD;
+
+    //jar with cookie
+    PM;
+    glTranslatef(-45.000000, -3.999998, 28.000000);
+    drawjars(.54,.3,.4);
+    PP;
+    //jar with cookie
+
+
+
+    GT;
+    PM;
+    glBindTexture(GL_TEXTURE_2D,27);
+    glRotatef(sAng,0,0,1);
+//    glTranslatef()
+    glTranslatef(-63.000000, -229.803848, 0.000000);
+    spherem(1,1,1);
+    PP;
+    GD;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -3407,6 +3567,11 @@ void myKeyboardFunc( unsigned char key, int x, int y )
         glutPostRedisplay();
         break;
 
+    case 'j':
+        lgt4 = !lgt4;
+        glutPostRedisplay();
+        break;
+
     case 'z':
 
         wtr = !wtr;
@@ -3477,6 +3642,24 @@ void myKeyboardFunc( unsigned char key, int x, int y )
         printf("%lf %lf %lf\n",tx,ty,tz);
         break;
 
+
+    case 'H':
+        bty-=.1;
+//        printf("%lf %lf %lf\n",tx,ty,tz);
+        break;
+    case 'J':
+        bty+=.1;
+//        printf("%lf %lf %lf\n",tx,ty,tz);
+        break;
+    case 'K':
+        btz-=1;
+//        printf("%lf %lf %lf\n",tx,ty,tz);
+        break;
+    case 'L':
+        btz+=1;
+//        printf("%lf %lf %lf\n",tx,ty,tz);
+        break;
+
     case 'Z':
         if(fAng>0)
             fAng-=1;
@@ -3496,6 +3679,29 @@ void myKeyboardFunc( unsigned char key, int x, int y )
             ovAng+=1;
         break;
 
+    case 'p':
+        jz+=.1;
+        break;
+    case 'P':
+        jz-=.1;
+        break;
+
+    case 'I':
+        bk+=.1;
+        break;
+    case 'O':
+        bk-=.1;
+        break;
+
+    case 'V':
+        cpz+=.1;
+        break;
+
+    case 'v':
+        cpz-=.1;
+        break;
+
+
 
     case 'E':
         py-=.1;
@@ -3514,7 +3720,7 @@ void myKeyboardFunc( unsigned char key, int x, int y )
 //        printf("%lf %lf %lf\n",tx,ty,tz);
         break;
 
-    case 'H':
+    case 'h':
 
 
 
@@ -3523,6 +3729,14 @@ void myKeyboardFunc( unsigned char key, int x, int y )
             pz+=.5;
         else
             pz-=.5;
+        break;
+
+    case 'k':
+        sAng+=2;
+        break;
+    case 'l':
+        srotate=!srotate;
+        glutPostRedisplay();
         break;
 
 
@@ -3544,6 +3758,13 @@ void animate()
         theta += 0.1;
         if(theta > 360.0)
             theta -= 360.0*floor(theta/360.0);
+    }
+
+    if (srotate == true)
+    {
+        sAng += 0.1;
+        if(sAng > 360.0)
+            sAng -= 360.0*floor(sAng/360.0);
     }
 
     if (fRotate == true)
@@ -3708,6 +3929,11 @@ int main (int argc, char **argv)
     LoadTexture2("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\cm2.bmp");///22
     LoadTexture2("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\cm3.bmp");///23
     LoadTexture2("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\mt.bmp");///24
+    LoadTexture2("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\grs.bmp");///25
+    LoadTexture2("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\sun.bmp");///26
+    LoadTexture2("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\moon.bmp");///27
+    LoadTexture2("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\fdoor.bmp");///28
+    LoadTexture2("F:\\captures\\4-2\\zlabs\\Graphics\\git\\Computer-Graphics\\Lab3\\ProjectProgress\\cki.bmp");///29
 //    light1();
     glutKeyboardFunc(myKeyboardFunc);
     glutDisplayFunc(display);
